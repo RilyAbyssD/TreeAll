@@ -1,7 +1,7 @@
 # TreeAll
 某一括伐採系MODの木こりバージョンをSpigotプラグインで再現
 
-バージョン: 1.17x~
+バージョン: 1.17x~  
 サーバークライアント: Spigot Paper
 
 # 使い方 How to use
