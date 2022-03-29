@@ -1,5 +1,6 @@
 package rilyabyss.treeall.Listener;
 
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -18,6 +19,11 @@ public class BlockBreakListener implements Listener {
 
         Player p = event.getPlayer();
 
+        // クリエイティブモードだったら
+        if (p.getGameMode().equals(GameMode.CREATIVE)) {
+            return;
+        }
+
         // 壊したブロックの座標を取得
         Location loc = event.getBlock().getLocation();
 
@@ -26,7 +32,7 @@ public class BlockBreakListener implements Listener {
 
         if (isAxe(p.getItemInHand().getType())) {
             if (loc.getBlockY() != block) {
-                breakTree(loc, block, event.getBlock().getType());
+                breakTree(loc, block);
             } else {
             }
         } else {
@@ -35,19 +41,15 @@ public class BlockBreakListener implements Listener {
 
     }
 
-    public void breakTree(Location loc, int HighestBlock, Material material) {
-
-        ArrayList<Block> blockList = new ArrayList<>();
+    public void breakTree(Location loc, int HighestBlock) {
 
         for (int i = loc.getBlockY(); i < HighestBlock; i++) {
             loc = loc.add(0, 1, 0);
 
-            if (isTree(loc.getBlock().getType())) {
-                blockList.add(loc.getBlock());
-            } else {
+            if (!isTree(loc.getBlock().getType())) {
                 break;
             }
-            loc.getBlock().breakNaturally(new ItemStack(Material.DIAMOND_AXE));
+            loc.getBlock().breakNaturally();
 
         }
 
